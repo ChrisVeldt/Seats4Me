@@ -14,11 +14,21 @@ namespace Seats4Me.DataAccess.Repositories
     {
         private readonly Seats4MeContext _context;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context"></param>
         public ScheduleRepository(Seats4MeContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Get the scheduled events for a given date range
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <param name="untilDate"></param>
+        /// <returns></returns>
         public async Task<List<Schedule>> GetScheduleAsync(DateTime fromDate, DateTime untilDate)
         {
             var scheduleQuery = _context.Schedules

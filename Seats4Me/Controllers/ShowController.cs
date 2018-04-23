@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Seats4Me.BusinessLogic.Interfaces;
+using Seats4Me.ViewModel;
 
 namespace Seats4Me.Controllers
 {
@@ -19,16 +20,21 @@ namespace Seats4Me.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Get a show by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> GetShowAsync(int id)
         {
-            var result = await _service.GetShowAsync(id);
+            var show = await _service.GetShowAsync(id);
 
-            if (result == null)
+            if (show == null)
             {
                 return new NoContentResult();
             }
 
-            return new ObjectResult(result);
+            return new ObjectResult(ShowViewModel.MapFromDbResult(show));
         }
 
     }

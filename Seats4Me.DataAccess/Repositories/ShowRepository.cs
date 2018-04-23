@@ -12,11 +12,20 @@ namespace Seats4Me.DataAccess.Repositories
     {
         private readonly Seats4MeContext _context;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context"></param>
         public ShowRepository(Seats4MeContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Get a show by Id
+        /// </summary>
+        /// <param name="showId"></param>
+        /// <returns></returns>
         public async System.Threading.Tasks.Task<Show> GetShowAsync(int showId)
         {
             return await _context.Shows.FindAsync(showId);

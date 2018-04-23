@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Seats4Me.BusinessLogic.Interfaces;
 using Seats4Me.BusinessLogic.Services;
-using Seats4Me.Common.interfaces;
+using Seats4Me.Common.Utils;
 using Seats4Me.DataAccess.Context;
 using Seats4Me.DataAccess.Interfaces;
 using Seats4Me.DataAccess.Migrations;
@@ -50,8 +50,8 @@ namespace Seats4Me
             var contextOptions = optionsBuilder.UseSqlServer(connectionString).Options;
             services.AddSingleton(contextOptions);
 
-            var configSectionApp = Configuration.GetSection("Seats4Me");
-            Configuration.Bind(configSectionApp);
+            var configSectionApp = new Seats4MeConfiguration();
+            (Configuration.GetSection("Seats4Me")).Bind(configSectionApp);
             services.AddSingleton(configSectionApp);
 
             // todo: Is this the best place for seeding?
@@ -61,8 +61,10 @@ namespace Seats4Me
             services.AddScoped<Seats4MeContext, Seats4MeContext>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<IShowRepository, ShowRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IShowService, ShowService>();
+            services.AddScoped<ITicketService, TicketService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -14,11 +14,21 @@ namespace Seats4Me.BusinessLogic.Services
     {
         private readonly IScheduleRepository _repository;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="repository"></param>
         public ScheduleService(IScheduleRepository repository)
         {
             _repository = repository;
         }
 
+        /// <summary>
+        /// Get the scheduled events for a given time period
+        /// </summary>
+        /// <param name="period"></param>
+        /// <param name="periodDate"></param>
+        /// <returns></returns>
         public async Task<List<Schedule>> GetScheduleAsync(string period, DateTime? periodDate)
         {
             var range = ScheduleRange.GetRange(period, periodDate);

@@ -10,6 +10,12 @@ namespace Seats4Me.Common.Utils
 {
     public static class ScheduleRange
     {
+        /// <summary>
+        /// Translate a period and date to from- and to-date.
+        /// </summary>
+        /// <param name="period"></param>
+        /// <param name="periodDate"></param>
+        /// <returns></returns>
         public static (ScheduleRangePeriod period, DateTime from, DateTime until) GetRange(string period, DateTime? periodDate)
         {
             DateTime fromDate;
@@ -43,6 +49,12 @@ namespace Seats4Me.Common.Utils
             return (schedulePeriod, fromDate, untilDate);
         }
 
+        /// <summary>
+        /// Get the from-and to-date previous to the given period and date.
+        /// </summary>
+        /// <param name="period"></param>
+        /// <param name="periodDate"></param>
+        /// <returns></returns>
         public static (ScheduleRangePeriod period, DateTime from, DateTime until) GetPreviousRange(string period, DateTime? periodDate)
         {
             var range = GetRange(period, periodDate);
@@ -53,6 +65,12 @@ namespace Seats4Me.Common.Utils
             return GetRange(range.period.ToString(), range.from.AddDays(-1));
         }
 
+        /// <summary>
+        /// Get the from-and to-date next after the given period and date.
+        /// </summary>
+        /// <param name="period"></param>
+        /// <param name="periodDate"></param>
+        /// <returns></returns>
         public static (ScheduleRangePeriod period, DateTime from, DateTime until) GetNextRange(string period, DateTime? periodDate)
         {
             var range = GetRange(period, periodDate);

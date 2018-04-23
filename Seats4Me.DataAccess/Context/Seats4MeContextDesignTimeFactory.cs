@@ -9,6 +9,11 @@ namespace Seats4Me.DataAccess.Context
     // Used for creating migrations
     class Seats4MeContextDesignTimeFactory : IDesignTimeDbContextFactory<Seats4MeContext>
     {
+        /// <summary>
+        /// Creates a DbContext for use with migrations
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public Seats4MeContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder();
