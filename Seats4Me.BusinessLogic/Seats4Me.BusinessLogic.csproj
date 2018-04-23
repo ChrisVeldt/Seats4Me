@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Seats4Me.Common\Seats4Me.Common.csproj" />
+    <ProjectReference Include="..\Seats4Me.DataAccess\Seats4Me.DataAccess.csproj" />
+    <ProjectReference Include="..\Seats4Me.Model\Seats4Me.Model.csproj" />
+  </ItemGroup>
+
+</Project>
