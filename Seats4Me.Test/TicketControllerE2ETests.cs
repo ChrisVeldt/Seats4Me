@@ -19,14 +19,13 @@ namespace Seats4Me.Test
         }
 
         [Fact]
-        public async void PostTicket()
+        public async void PostTicketTestAsync()
         {
-            var jsonContent = "{ticketId: 9," +
-                              " CustomerName: \"Tjalle\"," +
-                              " OrderDate: \"2018-02-23T20:00:00\"," +
-                              " Seats: 2," +
-                              " Paid: true," +
-                              " ScheduleId: 1" +
+            var jsonContent = "{customerName: \"Tjalle\"," +
+                              " orderDate: \"2018-02-23T20:00:00\"," +
+                              " seats: 2," +
+                              " paid: true," +
+                              " scheduleId: 3" +
                               "}";
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
@@ -34,8 +33,17 @@ namespace Seats4Me.Test
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
             var resultBody = await result.Content.ReadAsStringAsync();
-            Assert.Contains("2", resultBody);
+            Assert.Contains("1", resultBody);
+        }
 
+        [Fact]
+        public async void GetTicketsForAScheduleTestAsync()
+        {
+            var result = await _client.Seats4MeClient.GetAsync("api/schedule/4/ticket");
+
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            var resultBody = await result.Content.ReadAsStringAsync();
+            Assert.Contains("Chris", resultBody);
         }
     }
 }

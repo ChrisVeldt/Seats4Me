@@ -11,7 +11,7 @@ namespace Seats4Me.DataAccess.Test
     public class ShowRepositoryTests
     {
         [Fact]
-        public async void GetShowTest()
+        public async void GetShowTestAsync()
         {
             var repository = new ShowRepository(MockDbContext.MockSeats4MeContext());
 

@@ -9,5 +9,6 @@ namespace Seats4Me.BusinessLogic.Interfaces
     public interface ITicketService
     {
         Task<int> EnterTicketAsync(Ticket ticket);
+        Task<List<Ticket>> GetTicketsForAScheduleAsync(int scheduleId);
     }
 }

@@ -56,7 +56,7 @@ namespace Seats4Me.ViewModel
                 OrderDate = viewModel.OrderDate,
                 Paid = viewModel.Paid,
                 ScheduleId = viewModel.ScheduleId,
-                Schedule = new Schedule { ScheduleId = viewModel.ScheduleId}
+//                Schedule = new Schedule { ScheduleId = viewModel.ScheduleId}
             };
         }
     }

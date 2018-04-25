@@ -10,17 +10,14 @@ using Seats4Me.DataAccess.Interfaces;
 
 namespace Seats4Me.DataAccess.Repositories
 {
-    public class TicketRepository : ITicketRepository
+    public class TicketRepository : BaseRepository, ITicketRepository
     {
-        private readonly Seats4MeContext _context;
-
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public TicketRepository(Seats4MeContext context)
+        public TicketRepository(Seats4MeContext context) : base(context)
         {
-            _context = context;
         }
 
         /// <summary>
@@ -30,9 +27,8 @@ namespace Seats4Me.DataAccess.Repositories
         /// <returns></returns>
         public async Task<int> PostTicketAsync(Ticket ticket)
         {
-            _context.Tickets.Add(ticket);
-            var result = await _context.SaveChangesAsync();
-            return result;
+            Context.Tickets.Add(ticket);
+            return await Context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -42,7 +38,7 @@ namespace Seats4Me.DataAccess.Repositories
         /// <returns></returns>
         public async Task<List<Ticket>> GetTicketsByScheduleAsync(int scheduleId)
         {
-            var query = _context.Tickets.Where(t => t.ScheduleId == scheduleId);
+            var query = Context.Tickets.Where(t => t.ScheduleId == scheduleId);
             return await query.ToListAsync();
         }
 
@@ -53,7 +49,7 @@ namespace Seats4Me.DataAccess.Repositories
         /// <returns></returns>
         public async Task<int> GetSeatsSoldForScheduleAsync(int scheduleId)
         {
-            return await _context.Tickets.Where(t => t.ScheduleId == scheduleId).SumAsync(s => s.Seats);
+            return await Context.Tickets.Where(t => t.ScheduleId == scheduleId).SumAsync(s => s.Seats);
         }
 
     }

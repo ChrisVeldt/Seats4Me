@@ -8,17 +8,14 @@ using Seats4Me.Model.Result;
 
 namespace Seats4Me.DataAccess.Repositories
 {
-    public class ShowRepository : IShowRepository
+    public class ShowRepository : BaseRepository, IShowRepository
     {
-        private readonly Seats4MeContext _context;
-
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public ShowRepository(Seats4MeContext context)
+        public ShowRepository(Seats4MeContext context) : base(context)
         {
-            _context = context;
         }
 
         /// <summary>
@@ -28,7 +25,7 @@ namespace Seats4Me.DataAccess.Repositories
         /// <returns></returns>
         public async System.Threading.Tasks.Task<Show> GetShowAsync(int showId)
         {
-            return await _context.Shows.FindAsync(showId);
+            return await Context.Shows.FindAsync(showId);
         }
     }
 }

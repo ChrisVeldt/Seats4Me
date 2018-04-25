@@ -17,7 +17,7 @@ namespace Seats4Me.Test
         private readonly Mock<IUrlHelper> _mockUrlHelper = new Mock<IUrlHelper>();
 
         [Fact]
-        public async void GetScheduleForThisWeekAsyncTest()
+        public async void GetScheduleForThisWeekTestAsync()
         {
             var controller = new ScheduleController(_mockService.Object, _mockUrlHelper.Object);
 
@@ -27,7 +27,7 @@ namespace Seats4Me.Test
         }
 
         [Fact]
-        public async void GetScheduleForAllAsyncTest()
+        public async void GetScheduleForAllTestAsync()
         {
             var controller = new ScheduleController(_mockService.Object, _mockUrlHelper.Object);
 

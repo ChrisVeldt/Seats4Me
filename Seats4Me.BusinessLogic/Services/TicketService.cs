@@ -6,6 +6,7 @@ using System.Transactions;
 using Seats4Me.BusinessLogic.Interfaces;
 using Seats4Me.Common.Utils;
 using Seats4Me.DataAccess.Interfaces;
+using Seats4Me.DataAccess.Repositories;
 using Seats4Me.Model.Result;
 
 namespace Seats4Me.BusinessLogic.Services
@@ -33,16 +34,25 @@ namespace Seats4Me.BusinessLogic.Services
         /// <returns></returns>
         public async Task<int> EnterTicketAsync(Ticket ticket)
         {
-            var scheduleId = ticket.Schedule.ScheduleId;
-            var seats = await _repository.GetSeatsSoldForScheduleAsync(scheduleId);
-
+            var seats = await _repository.GetSeatsSoldForScheduleAsync(ticket.ScheduleId);
             var totalSeats = _config.TotalSeats;
+
             if (seats + ticket.Seats > totalSeats)
             {
                 return 0;
             }
-
             return await _repository.PostTicketAsync(ticket);
+        }
+
+        public async Task<List<Ticket>> GetTicketsForAScheduleAsync(int scheduleId)
+        {
+            var result = await _repository.GetTicketsByScheduleAsync(scheduleId);
+            if (result == null)
+            {
+                result = new List<Ticket>();
+            }
+
+            return result;
         }
 
     }

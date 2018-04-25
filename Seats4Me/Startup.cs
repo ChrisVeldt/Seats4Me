@@ -51,12 +51,14 @@ namespace Seats4Me
             services.AddSingleton(contextOptions);
 
             var configSectionApp = new Seats4MeConfiguration();
-            (Configuration.GetSection("Seats4Me")).Bind(configSectionApp);
+            Configuration.GetSection("Seats4Me").Bind(configSectionApp);
             services.AddSingleton(configSectionApp);
 
             // todo: Is this the best place for seeding?
-            var context = new Seats4MeContext(contextOptions);
-            InitializeDb.Seed(context);
+            using (var context = new Seats4MeContext(contextOptions))
+            {
+                InitializeDb.Seed(context);
+            }
 
             services.AddScoped<Seats4MeContext, Seats4MeContext>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();

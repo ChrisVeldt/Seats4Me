@@ -48,7 +48,7 @@ namespace Seats4Me.BusinessLogic.Test
                 CustomerName = "Marijke",
                 OrderDate = new DateTime(2018, 2, 1),
                 Paid = true,
-                Schedule = new Schedule { ScheduleId = 1},
+                ScheduleId =  1,
                 Seats = 10
             };
             var ticket2 = new Ticket
@@ -57,7 +57,7 @@ namespace Seats4Me.BusinessLogic.Test
                 CustomerName = "Marijke",
                 OrderDate = new DateTime(2018, 2, 1),
                 Paid = true,
-                Schedule = new Schedule { ScheduleId = 2 },
+                ScheduleId = 2,
                 Seats = 141
             };
             var ticket3 = new Ticket
@@ -66,7 +66,7 @@ namespace Seats4Me.BusinessLogic.Test
                 CustomerName = "Marijke",
                 OrderDate = new DateTime(2018, 2, 1),
                 Paid = true,
-                Schedule = new Schedule { ScheduleId = 1 },
+                ScheduleId = 1,
                 Seats = 141
             };
 
@@ -79,6 +79,19 @@ namespace Seats4Me.BusinessLogic.Test
             Assert.True(result1 > 0);
             Assert.True(result2 > 0);
             Assert.Equal(0, result3);
+        }
+
+        [Fact]
+        public async void GetTicketsForAScheduleTestAsync()
+        {
+            var repository = new TicketRepository(MockDbContext.MockSeats4MeContext());
+            var config = new Seats4MeConfiguration { TotalSeats = 150 };
+            var service = new TicketService(repository, config);
+
+            var result = await service.GetTicketsForAScheduleAsync(2);
+
+            Assert.IsType<List<Ticket>>(result);
+            Assert.All(result, t => Assert.Contains("Chris", t.CustomerName));
         }
     }
 }

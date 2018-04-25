@@ -11,7 +11,6 @@ using Seats4Me.ViewModel;
 namespace Seats4Me.Controllers
 {
     [Produces("application/json")]
-    [Route("api/ticket")]
     public class TicketController : Controller
     {
         private readonly ITicketService _service;
@@ -22,7 +21,8 @@ namespace Seats4Me.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostTicket(TicketViewModel ticketView)
+        [Route("api/ticket")]
+        public async Task<IActionResult> PostTicketAsync([FromBody] TicketViewModel ticketView)
         {
             var ticket = TicketViewModel.MapToDbResult(ticketView);
             var result = await _service.EnterTicketAsync(ticket);
@@ -35,5 +35,18 @@ namespace Seats4Me.Controllers
             return new OkObjectResult(result);
         }
 
+        [HttpGet]
+        [Route("api/schedule/{scheduleId}/ticket")]
+        public async Task<IActionResult> GetAllTicketsForAScheduleAsync(int scheduleId)
+        {
+            var result = await _service.GetTicketsForAScheduleAsync(scheduleId);
+
+            if (result == null)
+            {
+                return new NoContentResult();
+            }
+            return new OkObjectResult(result);
+
+        }
     }
 }

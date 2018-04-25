@@ -10,17 +10,14 @@ using Seats4Me.Model.Result;
 
 namespace Seats4Me.DataAccess.Repositories
 {
-    public class ScheduleRepository : IScheduleRepository
+    public class ScheduleRepository : BaseRepository, IScheduleRepository
     {
-        private readonly Seats4MeContext _context;
-
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public ScheduleRepository(Seats4MeContext context)
+        public ScheduleRepository(Seats4MeContext context) : base(context)
         {
-            _context = context;
         }
 
         /// <summary>
@@ -31,7 +28,7 @@ namespace Seats4Me.DataAccess.Repositories
         /// <returns></returns>
         public async Task<List<Schedule>> GetScheduleAsync(DateTime fromDate, DateTime untilDate)
         {
-            var scheduleQuery = _context.Schedules
+            var scheduleQuery = Context.Schedules
                 .Where(s => s.ScheduleDate >= fromDate && s.ScheduleDate < untilDate.AddDays(1))
                 .Select(c => new Schedule
                 {
